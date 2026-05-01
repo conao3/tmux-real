@@ -556,8 +556,6 @@ function App() {
               <div className="boot-banner" style={{borderColor: a.hex + "44"}}>
                 <span style={{color: a.hex}}>●</span>
                 <span>secret-gist scheduler · live demo</span>
-                <span className="boot-dot">·</span>
-                <span className="boot-dim">no actual gists were created</span>
               </div>
             )}
             <h1 className="title">
@@ -590,9 +588,6 @@ function App() {
 
           <div className="hero-right">
             <HeroTerminal accent={t.accent} scanlines={t.scanlines} demoSpeed={t.demoSpeed}/>
-            <div className="hero-caption">
-              live demo · loops · click <kbd>tmux-real skip</kbd> to interrupt
-            </div>
           </div>
         </section>
 
