@@ -324,7 +324,13 @@ function HowItWorks({ accent }) {
     <section className="hiw">
       <div className="section-head">
         <div className="kicker" style={{color: a.hex}}>// how it works</div>
-        <h2>Four states. One scheduler. Zero excuses.</h2>
+        <h2>
+          Four states.
+          <br />
+          One scheduler.
+          <br />
+          Zero excuses.
+        </h2>
         <p className="lede">tmux-real lives as a Rust binary plus a thin TPM plugin entrypoint. The binary does the real work.</p>
       </div>
 
