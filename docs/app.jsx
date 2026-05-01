@@ -2,7 +2,7 @@
 const { useState, useEffect, useRef } = React;
 
 const REPO_URL = "https://github.com/conao3/tmux-real";
-const INSTALL_CMD = "cargo install --git https://github.com/conao3/tmux-real tmux-real";
+const INSTALL_CMD = "cargo install tmux-real";
 const TPM_PLUGIN_LINE = "set -g @plugin 'conao3/tmux-real'";
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{

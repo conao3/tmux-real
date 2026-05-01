@@ -2,6 +2,13 @@
 name = "tmux-real"
 version = "0.1.0"
 edition = "2021"
+description = "A tmux parody tool that posts pane viewports to a secret GitHub Gist if you miss the countdown"
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/conao3/tmux-real"
+homepage = "https://github.com/conao3/tmux-real"
+keywords = ["tmux", "cli", "gist"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 anyhow = "1.0"
@@ -17,4 +24,3 @@ sha2 = "0.10"
 strip-ansi-escapes = "0.2"
 tempfile = "3.10"
 which = "6.0"
-

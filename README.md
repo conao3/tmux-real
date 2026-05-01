@@ -26,7 +26,13 @@ cargo test
 
 ## Install
 
-Build or install the binary so `tmux-real` is available on your `PATH`:
+Install from crates.io:
+
+```sh
+cargo install tmux-real
+```
+
+For local development, install from the current checkout instead:
 
 ```sh
 cargo install --path .
@@ -105,4 +111,3 @@ set -g @tmux-real-interval-minutes 30
 set -g @tmux-real-grace-seconds 90
 set -g @tmux-real-redact-patterns 'ghp_[A-Za-z0-9]+||AIza[0-9A-Za-z_-]+'
 ```
-
