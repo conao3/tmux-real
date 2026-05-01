@@ -35,6 +35,7 @@ cargo install tmux-real
 Run it directly from GitHub with Nix:
 
 ```sh
+nix run github:conao3/tmux-real
 nix run github:conao3/tmux-real -- init
 nix run github:conao3/tmux-real -- start
 ```
