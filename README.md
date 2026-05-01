@@ -111,3 +111,15 @@ set -g @tmux-real-interval-minutes 30
 set -g @tmux-real-grace-seconds 90
 set -g @tmux-real-redact-patterns 'ghp_[A-Za-z0-9]+||AIza[0-9A-Za-z_-]+'
 ```
+
+## Origins
+
+`tmux-real` is directly inspired by these posts:
+
+> 「通知が来たら2分以内に今開いてるファイル内容を送信しないといけない VimReal たぶん流行る。(流行らない)」
+>
+> — [mattn](https://x.com/mattn_jp/status/2050010226158600678)
+
+> 「git real作ったんですけどこれ本当に流行るんですか。。。？」
+>
+> — [watany](https://x.com/_watany/status/2050064694770339920), [gitreal](https://github.com/watany-dev/gitreal)
