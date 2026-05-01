@@ -45,6 +45,7 @@ const STAGE_POSTED      = "posted";
 function HeroTerminal({ accent, scanlines, demoSpeed }) {
   const [lines, setLines] = useState([]);
   const [remaining, setRemaining] = useState(120);
+  const [barProgress, setBarProgress] = useState(1);
   const [stage, setStage] = useState(STAGE_PROMPT);
   const [restartKey, setRestartKey] = useState(0);
   const scrollRef = useRef(null);
@@ -62,6 +63,7 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
     setLines([]);
     setStage(STAGE_PROMPT);
     setRemaining(120);
+    setBarProgress(1);
 
     const now = new Date();
     const deadline = new Date(now.getTime() + 120_000);
@@ -92,9 +94,13 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
         if (cancelled) return;
         const elapsed = (Date.now() - start) / (1500 * SPEED);   // ~1.5s -> 90 virtual seconds
         const v = Math.max(30, 120 - elapsed * 90);
-        setRemaining(Math.round(v));
+        setRemaining(Math.ceil(v));
+        setBarProgress(v / 120);
         if (v > 30) requestAnimationFrame(tick);
-        else setRemaining(30);
+        else {
+          setRemaining(30);
+          setBarProgress(30 / 120);
+        }
       };
       tick();
     });
@@ -115,9 +121,13 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
         if (cancelled) return;
         const elapsed = (Date.now() - start) / (1100 * SPEED);
         const v = Math.max(10, 30 - elapsed * 20);
-        setRemaining(Math.round(v));
+        setRemaining(Math.ceil(v));
+        setBarProgress(v / 120);
         if (v > 10) requestAnimationFrame(tick);
-        else setRemaining(10);
+        else {
+          setRemaining(10);
+          setBarProgress(10 / 120);
+        }
       };
       tick();
     });
@@ -133,12 +143,14 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
     [5, 4, 3, 2, 1].forEach((n, i) => {
       at(5000 + i * 700, () => {
         setRemaining(n);
+        setBarProgress(n / 120);
         push({ k: "warn", text: `[tmux-real] target=${target} remaining=${n}s  skip='tmux-real skip'  stop='tmux-real stop'` });
       });
     });
 
     at(8500, () => {
       setRemaining(0);
+      setBarProgress(0);
       setStage(STAGE_TIMEOUT);
       push({ k: "alert", text: `[tmux-real] target=${target} timeout reached; capturing panes and creating secret gist…` });
     });
@@ -235,7 +247,7 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
             </div>
             <div className="hud-bar">
               <div className="hud-bar-fill" style={{
-                width: `${(remaining/120)*100}%`,
+                transform: `scaleX(${barProgress})`,
                 background: digitColor,
                 boxShadow: `0 0 12px ${digitColor}88`,
               }}/>

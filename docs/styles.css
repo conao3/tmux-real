@@ -311,8 +311,11 @@ kbd {
   overflow: hidden;
 }
 .hud-bar-fill {
+  width: 100%;
   height: 100%;
-  transition: width .25s linear, background .2s, box-shadow .2s;
+  transform-origin: left center;
+  will-change: transform;
+  transition: transform .06s linear, background .2s, box-shadow .2s;
   border-radius: 2px;
 }
 
