@@ -1,5 +1,9 @@
 /* global React, ReactDOM */
-const { useState, useEffect, useRef, useMemo } = React;
+const { useState, useEffect, useRef } = React;
+
+const REPO_URL = "https://github.com/conao3/tmux-real";
+const INSTALL_CMD = "cargo install --git https://github.com/conao3/tmux-real tmux-real";
+const TPM_PLUGIN_LINE = "set -g @plugin 'conao3/tmux-real'";
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accent": "lime",
@@ -42,7 +46,6 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
   const [lines, setLines] = useState([]);
   const [remaining, setRemaining] = useState(120);
   const [stage, setStage] = useState(STAGE_PROMPT);
-  const [skipped, setSkipped] = useState(false);
   const [restartKey, setRestartKey] = useState(0);
   const scrollRef = useRef(null);
 
@@ -57,7 +60,6 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
     const at = (ms, fn) => timers.push(setTimeout(() => { if (!cancelled) fn(); }, ms * SPEED));
 
     setLines([]);
-    setSkipped(false);
     setStage(STAGE_PROMPT);
     setRemaining(120);
 
@@ -71,7 +73,7 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
     at(120,  () => push({ k: "prompt", text: "tmux-real start" }));
     at(380,  () => push([
       { k: "ok",   text: "✓ tmux client detected (session=dev)" },
-      { k: "ok",   text: "✓ gh auth status — logged in as @octo-dev" },
+      { k: "ok",   text: "✓ gh auth status — logged in as @conao3" },
       { k: "ok",   text: "✓ scheduler started (pid 28471)" },
       { k: "dim",  text: `next_challenge_at = ${fmtRFC3339(new Date(now.getTime() + 600_000))}` },
     ]));
@@ -155,7 +157,7 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
     at(10500, () => {
       setStage(STAGE_POSTED);
       push([
-        { k: "ok",     text: "[tmux-real] posted https://gist.github.com/octo-dev/4f2c…91ab" },
+        { k: "ok",     text: "[tmux-real] posted https://gist.github.com/conao3/4f2c…91ab (demo)" },
         { k: "prompt", text: "" },
       ]);
     });
@@ -173,7 +175,6 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
 
   const onSkip = () => {
     if (stage === STAGE_POSTING || stage === STAGE_POSTED) return;
-    setSkipped(true);
     setLines((xs) => [
       ...xs,
       { k: "prompt", text: "tmux-real skip" },
@@ -259,7 +260,7 @@ function TermLine({ line, accent }) {
   if (line.k === "prompt") {
     return (
       <div className="ln">
-        <span className="psn" style={{color: accent.hex}}>octo@dev</span>
+        <span className="psn" style={{color: accent.hex}}>conao@dev</span>
         <span className="psd"> ~/code/tmux-real </span>
         <span className="pst" style={{color: accent.hex}}>$ </span>
         <span className="cmd">{line.text}</span>
@@ -300,7 +301,7 @@ function HowItWorks({ accent }) {
       n: "02",
       title: "challenge fires",
       sub: "120s grace · countdown reminders at 60/30/10/5..1",
-      body: "display-message broadcasts to every pane in the target session. status line is left untouched. you have two hundred and twenty heartbeats to react.",
+      body: "display-message broadcasts to every pane in the target session. status line is left untouched. you get one hundred and twenty seconds to react.",
       glyph: "◉",
     },
     {
@@ -313,8 +314,8 @@ function HowItWorks({ accent }) {
     {
       n: "04",
       title: "timeout → secret gist",
-      sub: "every pane, captured & redacted",
-      body: "tmux capture-pane on every window/pane in scope. ANSI stripped, secrets redacted via regex, posted as a single secret gist via gh.",
+      sub: "visible panes, captured & redacted",
+      body: "tmux capture-pane records the visible viewport of every pane in scope. ANSI is stripped, secrets are redacted via regex, then the result is posted as a secret gist via gh.",
       glyph: "✦",
     },
   ];
@@ -324,7 +325,7 @@ function HowItWorks({ accent }) {
       <div className="section-head">
         <div className="kicker" style={{color: a.hex}}>// how it works</div>
         <h2>Four states. One scheduler. Zero excuses.</h2>
-        <p className="lede">tmux-real lives as a Rust binary plus a TPM plugin entrypoint. The plugin is twelve lines. The binary does the work.</p>
+        <p className="lede">tmux-real lives as a Rust binary plus a thin TPM plugin entrypoint. The binary does the real work.</p>
       </div>
 
       <ol className="hiw-grid">
@@ -374,10 +375,10 @@ function Install({ accent }) {
     setTimeout(() => setCopied(null), 1400);
   };
 
-  const tpmLine = `set -g @plugin 'octo-dev/tmux-real'`;
-  const cargoLine = `cargo install tmux-real`;
-  const ghAuth   = `gh auth login`;
-  const start    = `tmux-real start`;
+  const tpmLine = TPM_PLUGIN_LINE;
+  const cargoLine = INSTALL_CMD;
+  const ghAuth = "gh auth login";
+  const start = "tmux-real start";
 
   const Block = ({ id, prompt, code, note }) => (
     <div className="cmd-block" onClick={() => copy(code, id)}>
@@ -512,7 +513,15 @@ function App() {
           <a href="#how">how it works</a>
           <a href="#install">install</a>
           <a href="#commands">commands</a>
-          <a href="#repo" className="nav-cta" style={{borderColor: a.hex + "66", color: a.hex}}>★ github</a>
+          <a
+            href={REPO_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="nav-cta"
+            style={{borderColor: a.hex + "66", color: a.hex}}
+          >
+            ★ github
+          </a>
         </nav>
       </header>
 
@@ -533,12 +542,18 @@ function App() {
             </h1>
             <p className="sub">
               A scheduler that, on its own schedule, asks your terminal to <em>show its work</em>.
-              Don't <kbd>skip</kbd> in time and every pane in your session ships to a secret gist.
+              Don't <kbd>skip</kbd> in time and the visible viewport of every pane in your session ships to a secret gist.
               Built in Rust. Loaded via TPM. Powered by <code>gh</code>.
             </p>
             <div className="hero-cta">
-              <a href="#install" className="cta-primary" style={{background: a.hex, boxShadow: `0 0 0 1px ${a.hex}, 0 12px 40px ${a.glow}`}}>
-                $ cargo install tmux-real
+              <a
+                href={REPO_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="cta-primary"
+                style={{background: a.hex, boxShadow: `0 0 0 1px ${a.hex}, 0 12px 40px ${a.glow}`}}
+              >
+                view source on github
               </a>
               <a href="#how" className="cta-secondary">how does this work →</a>
             </div>
@@ -568,7 +583,7 @@ function App() {
             <span className="foot-dim">— a parody. you are the experiment.</span>
           </div>
           <div className="foot-r">
-            <span className="foot-dim">MIT · 2026 · made under duress at 02:31 local time</span>
+            <a href={REPO_URL} target="_blank" rel="noreferrer" className="foot-dim">github.com/conao3/tmux-real</a>
           </div>
         </footer>
       </main>
