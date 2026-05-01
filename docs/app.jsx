@@ -206,6 +206,13 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
       : stage === STAGE_WARN_10 ? "#fbbf24"
       : stage === STAGE_WARN_30 ? "#fbbf24"
       : a.hex;
+  const showCountdownHud =
+    stage === STAGE_CHALLENGE ||
+    stage === STAGE_WARN_30 ||
+    stage === STAGE_WARN_10 ||
+    stage === STAGE_FINAL;
+  const showPostingHud = stage === STAGE_POSTING;
+  const showHud = showCountdownHud || showPostingHud;
 
   return (
     <div className="term" data-scan={scanlines ? "on" : "off"}>
@@ -218,11 +225,11 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
       </div>
 
       <div className="term-body">
-        <div className="term-stream" ref={scrollRef}>
+        <div className={`term-stream${showHud ? " term-stream-with-hud" : ""}`} ref={scrollRef}>
           {lines.map((l, i) => <TermLine key={i} line={l} accent={a} />)}
         </div>
 
-        {(stage === STAGE_CHALLENGE || stage === STAGE_WARN_30 || stage === STAGE_WARN_10 || stage === STAGE_FINAL) && (
+        {showCountdownHud && (
           <div className="hud">
             <div className="hud-label" style={{color: a.hex}}>⏱ tmux-real challenge — secret gist on timeout</div>
             <div className="hud-row">
@@ -255,7 +262,7 @@ function HeroTerminal({ accent, scanlines, demoSpeed }) {
           </div>
         )}
 
-        {stage === STAGE_POSTING && (
+        {showPostingHud && (
           <div className="hud posting">
             <div className="hud-label" style={{color:"#fb7185"}}>● posting secret gist…</div>
             <div className="hud-spinner">
