@@ -4,6 +4,8 @@
 
 The CLI is written in Rust. The tmux side is a thin TPM-compatible entrypoint plus tmux global user options.
 
+An actual `tmux-real` post: <https://gist.github.com/conao3/cc3668de9a4435862aaa8242775da0ab> (posts are created as private gists; if you want one to be public, change its visibility yourself)
+
 ## Development
 
 Enter the development shell:
