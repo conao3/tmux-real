@@ -229,9 +229,6 @@ kbd {
   display: flex; flex-direction: column; gap: 4px;
   scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.12) transparent;
 }
-.term-stream-with-hud {
-  padding-bottom: 190px;
-}
 .term-stream::-webkit-scrollbar { width: 6px; }
 .term-stream::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 4px; }
 
@@ -270,11 +267,6 @@ kbd {
 
 /* HUD */
 .hud {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
   border-top: 1px solid var(--line-2);
   padding: 14px 18px 16px;
   background:
