@@ -403,7 +403,13 @@ function Install({ accent }) {
     <section className="install">
       <div className="section-head">
         <div className="kicker" style={{color: a.hex}}>// install</div>
-        <h2>Three lines. One binary. Then start the timer.</h2>
+        <h2>
+          Three lines.
+          <br />
+          One binary.
+          <br />
+          Then start the timer.
+        </h2>
         <p className="lede">tmux-real ships as a TPM-loadable plugin. The plugin is just an entrypoint — the real logic is the Rust binary you install once.</p>
       </div>
 
