@@ -555,7 +555,7 @@ function App() {
             {t.showBootBanner && (
               <div className="boot-banner" style={{borderColor: a.hex + "44"}}>
                 <span style={{color: a.hex}}>●</span>
-                <span>secret-gist scheduler · live demo</span>
+                <span>secret-gist scheduler</span>
               </div>
             )}
             <h1 className="title">
