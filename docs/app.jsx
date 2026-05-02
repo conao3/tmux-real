@@ -352,7 +352,7 @@ const COPY = {
       },
     },
     footer: {
-      note: "— パロディです。実験台はあなたです。",
+      note: "",
     },
     tweaks: {
       accentSection: "Accent",
@@ -872,7 +872,7 @@ function App() {
           <div className="foot-l">
             <span className="brand-glyph" style={{ color: a.hex }}>▣</span>
             <span>tmux-real</span>
-            <span className="foot-dim">{copy.footer.note}</span>
+            {copy.footer.note && <span className="foot-dim">{copy.footer.note}</span>}
           </div>
           <div className="foot-r">
             <a href={REPO_URL} target="_blank" rel="noreferrer" className="foot-dim">github.com/conao3/tmux-real</a>
