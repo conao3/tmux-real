@@ -226,7 +226,7 @@ const COPY = {
     },
     hero: {
       banner: "secret-gist scheduler",
-      titleLead: "tmux でも",
+      titleLead: "tmuxでも",
       titleAccent: "real",
       titleTail: "を見せろ。",
       subtitle: () => (
@@ -824,43 +824,57 @@ function App() {
 
       <main>
         <section className="hero">
-          <div className="hero-left">
-            {t.showBootBanner && (
-              <div className="boot-banner" style={{ borderColor: `${a.hex}44` }}>
-                <span style={{ color: a.hex }}>●</span>
-                <span>{copy.hero.banner}</span>
+          <div className="hero-shell">
+            <div className="hero-left">
+              {t.showBootBanner && (
+                <div className="boot-banner" style={{ borderColor: `${a.hex}44` }}>
+                  <span style={{ color: a.hex }}>●</span>
+                  <span>{copy.hero.banner}</span>
+                </div>
+              )}
+              <h1 className="title">
+                {locale === "ja" ? (
+                  <>
+                    {copy.hero.titleLead}
+                    <br />
+                    <span className="title-accent" style={{ color: a.hex, textShadow: `0 0 28px ${a.glow}` }}>{copy.hero.titleAccent}</span>
+                    <br />
+                    {copy.hero.titleTail}
+                  </>
+                ) : (
+                  <>
+                    {copy.hero.titleLead} <span className="title-accent" style={{ color: a.hex, textShadow: `0 0 28px ${a.glow}` }}>{copy.hero.titleAccent}</span>
+                    <br />
+                    {copy.hero.titleTail}
+                  </>
+                )}
+              </h1>
+              <p className="sub">{copy.hero.subtitle()}</p>
+              <div className="hero-cta">
+                <a
+                  href={REPO_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="cta-primary"
+                  style={{ background: a.hex, boxShadow: `0 0 0 1px ${a.hex}, 0 12px 40px ${a.glow}` }}
+                >
+                  {copy.hero.primaryCta}
+                </a>
+                <a href="#how" className="cta-secondary">{copy.hero.secondaryCta}</a>
               </div>
-            )}
-            <h1 className="title">
-              {copy.hero.titleLead} <span className="title-accent" style={{ color: a.hex, textShadow: `0 0 28px ${a.glow}` }}>{copy.hero.titleAccent}</span>
-              <br />
-              {copy.hero.titleTail}
-            </h1>
-            <p className="sub">{copy.hero.subtitle()}</p>
-            <div className="hero-cta">
-              <a
-                href={REPO_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="cta-primary"
-                style={{ background: a.hex, boxShadow: `0 0 0 1px ${a.hex}, 0 12px 40px ${a.glow}` }}
-              >
-                {copy.hero.primaryCta}
-              </a>
-              <a href="#how" className="cta-secondary">{copy.hero.secondaryCta}</a>
+              <ul className="hero-stats">
+                {copy.hero.stats.map(([value, label]) => (
+                  <li key={label}>
+                    <b style={{ color: a.hex }}>{value}</b>
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="hero-stats">
-              {copy.hero.stats.map(([value, label]) => (
-                <li key={label}>
-                  <b style={{ color: a.hex }}>{value}</b>
-                  <span>{label}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
 
-          <div className="hero-right">
-            <HeroTerminal accent={t.accent} scanlines={t.scanlines} demoSpeed={t.demoSpeed} copy={copy} />
+            <div className="hero-right">
+              <HeroTerminal accent={t.accent} scanlines={t.scanlines} demoSpeed={t.demoSpeed} copy={copy} />
+            </div>
           </div>
         </section>
 
