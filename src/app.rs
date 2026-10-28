@@ -8,7 +8,7 @@ use std::time::Duration;
 
 use anyhow::{anyhow, bail, Context, Result};
 use chrono::{DateTime, Duration as ChronoDuration, FixedOffset, Local};
-use rand::Rng;
+use rand::RngExt;
 use tempfile::tempdir;
 use which::which;
 
@@ -748,13 +748,13 @@ fn spawn_daemon(tmux: &TmuxClient, paths: &StatePaths, session: &str) -> Result<
 }
 
 fn next_challenge_at(config: &RuntimeConfig) -> DateTime<FixedOffset> {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let jitter_seconds = (config.jitter_minutes as i64) * 60;
     let base_seconds = (config.interval_minutes as i64) * 60;
     let offset = if jitter_seconds == 0 {
         0
     } else {
-        rng.gen_range(-jitter_seconds..=jitter_seconds)
+        rng.random_range(-jitter_seconds..=jitter_seconds)
     };
     let wait_seconds = (base_seconds + offset).max(1);
     now_fixed() + ChronoDuration::seconds(wait_seconds)

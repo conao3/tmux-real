@@ -112,7 +112,11 @@ pub fn log_event(paths: &StatePaths, message: &str) -> Result<()> {
 pub fn socket_hash(socket_path: &str) -> String {
     let mut hasher = Sha256::new();
     hasher.update(socket_path.as_bytes());
-    format!("{:x}", hasher.finalize())
+    hasher
+        .finalize()
+        .iter()
+        .map(|byte| format!("{byte:02x}"))
+        .collect()
 }
 
 fn state_home() -> PathBuf {
