@@ -63,6 +63,7 @@ impl LockedState {
             .create(true)
             .read(true)
             .write(true)
+            .truncate(false)
             .open(&paths.lock_path)
             .with_context(|| format!("failed to open lock file {}", paths.lock_path.display()))?;
         lock_file
