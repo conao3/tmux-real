@@ -113,13 +113,13 @@ const COPY = {
         {
           n: "02",
           title: "challenge fires",
-          sub: "120s grace · countdown reminders at 60/30/10/5..1",
+          sub: "120s grace / countdown reminders at 60/30/10/5..1",
           body: "display-message broadcasts to every pane in the target session. status line is left untouched. you get one hundred and twenty seconds to react.",
           glyph: "◉",
         },
         {
           n: "03",
-          title: "skip · stop · ignore",
+          title: "skip / stop / ignore",
           sub: "your three options",
           body: "skip: dismiss this one, scheduler continues. stop: kill the scheduler entirely. ignore: see step 04.",
           glyph: "⋮",
@@ -281,13 +281,13 @@ const COPY = {
         {
           n: "02",
           title: "challenge 発火",
-          sub: "猶予 120s · 60/30/10/5..1 で通知",
+          sub: "猶予 120s / 60/30/10/5..1 で通知",
           body: "target session 内の各 pane に display-message を出します。status line は触りません。猶予は 120 秒。それを過ぎると次のフェーズに進みます。",
           glyph: "◉",
         },
         {
           n: "03",
-          title: "skip · stop · ignore",
+          title: "skip / stop / ignore",
           sub: "選択肢は3つ",
           body: "skip は今回だけ見逃し、scheduler は継続。stop は scheduler 全体を停止。無視した場合は次へ。",
           glyph: "⋮",
@@ -804,7 +804,7 @@ function App() {
         <div className="brand">
           <span className="brand-glyph" style={{ color: a.hex, textShadow: `0 0 14px ${a.glow}` }}>▣</span>
           <span className="brand-name">tmux-real</span>
-          <span className="brand-ver">v0.1.0 · MVP</span>
+          <span className="brand-ver">v0.1.0 / MVP</span>
         </div>
         <nav className="nav">
           <a href="#how">{copy.nav.how}</a>
